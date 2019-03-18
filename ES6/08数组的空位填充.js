@@ -11,5 +11,5 @@ const fillEmpty = (arr) => {
 const a = [, , null, undefined, 'OK', , ]
 
 console.log(fillEmpty(a));
-console.log(fillEmpty2(a));
+
 // a 变成 ['Hello', 'Hello', null, undefined, 'OK', 'Hello']
