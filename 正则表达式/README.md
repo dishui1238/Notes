@@ -35,7 +35,7 @@ m | 多行匹配
     console.log(link1.replace(reg2,'$2')); //http://google.com
     ```
 3. 使用\选择器
-    ![例子](./imgs/reg.png)
+    ![例子](https://github.com/dishui1238/Notes/blob/master/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/imgs/reg.PNG?raw=true)
     ```js
     const str = 'This is is a a dog , I think think this is is really a a good good dog. Don\'t you you thinks so so ?'
     const reg3 = /\b(\w+)\s\1\b/
