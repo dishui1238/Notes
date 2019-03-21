@@ -1,3 +1,3 @@
-const fillEmpty = (arr) => {
-//     [...arr].map((item, index) => Reflect.has(arr, index) ? '' : arr[index] = 'Hello')
-// }
+Map.prototype.filterKeys = function(fn) {
+//     return new Map([...this].filter(([k, v]) => fn(k)));
+//   }
