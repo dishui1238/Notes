@@ -27,6 +27,16 @@ const flatten3 = (arr) => {
         return arr
     }
 }
+// 方法四
+function flatten4(arr) {
+    while(arr.some(item=>Array.isArray(item))) {
+        arr = [].concat(...arr);
+    }
+    return arr;
+}
+// 方法五
+// Array.flat(n)是ES10扁平数组的api,n表示维度,n值为Infinity时维度为无限大
+
 var arr = [1, [[2], 3, 4], 5];
 console.log(flatten(arr));
 // console.log(flatten2(arr));

@@ -1,3 +1,1 @@
-Map.prototype.filterKeys = function(fn) {
-//     return new Map([...this].filter(([k, v]) => fn(k)));
-//   }
+let arr = [[0,1,2],[1,2,3],4,5,[3,[6,77,88]]]

@@ -6,20 +6,26 @@
 //   console.log('World') // 一秒以后继续运行
 // }
 
+// const pause = (time) => {
+//     return new Promise(resolve => {
+//         setTimeout(resolve,time)
+//     })
+// }
 const pause = (time) => {
-    return new Promise(resolve => {
-        setTimeout(resolve,time)
+    return new Promise((resolve, reject)=> {
+        setTimeout(function () {
+            console.log('1s');
+        }, time)
+        resolve()
     })
 }
-// const pause = (time) => {
-//     return setTimeout(function () {
-//         console.log('1s');
-//     }, time)
-// }
 
 async function run() {
     console.log('Hello')
     await pause(1000) // 续一秒
+    // await setTimeout(function(){
+    //     console.log('1s');
+    // },1000)
     console.log('World') // 一秒以后继续运行
 }
 run()

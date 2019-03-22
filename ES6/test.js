@@ -1,13 +1,5 @@
-let promise = new Promise(function (resolve, reject) {
-  // setTimeout(resolve('success'), 1000)
-  setTimeout(reject(new Error('test')), 1000)
+// const foo = ((x, y) => x + y)
+const foo = ((x, y) => {
+  x + y
 })
-
-promise
-  .then(function (item) {
-    console.log(item);
-    console.log('then');
-  })
-  .catch(function (err) {
-    console.log(err);
-  })
+console.log(foo(1, 2));
