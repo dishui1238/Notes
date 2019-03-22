@@ -1,16 +1,13 @@
-var loggedObj = new Proxy(obj, {
-    get(target, name) {
-      console.log('get', target, name);
-      return Reflect.get(target, name);
-    },
-    deleteProperty(target, name) {
-      console.log('delete' + name);
-      return Reflect.deleteProperty(target, name);
-    },
-    has(target, name) {
-      console.log('has' + name);
-      return Reflect.has(target, name);
-    }
-  });
+let promise = new Promise(function (resolve, reject) {
+  // setTimeout(resolve('success'), 1000)
+  setTimeout(reject(new Error('test')), 1000)
+})
 
-  
+promise
+  .then(function (item) {
+    console.log(item);
+    console.log('then');
+  })
+  .catch(function (err) {
+    console.log(err);
+  })
