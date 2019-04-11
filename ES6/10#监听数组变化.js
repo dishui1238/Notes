@@ -5,7 +5,9 @@
 
 function ObserverableArray(...args) {
     // console.log(...args);
+
     return new Proxy(new Array(...args), {
+        // get参数：目标对象，访问的属性
         get(target, propKey) {
             const res = target[propKey]
             if (typeof res == 'function') {

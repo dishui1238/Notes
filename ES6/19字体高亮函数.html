@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    .red {
+        color: red;
+    }
+</style>
+
+<body>
+    <!-- 请你完成 highlight 函数，可以把模版字符串中的插入内容替换掉，并且插入文档以后显示红色。例如：
+
+const yourName = 'ScriptOJ'
+const myName = 'Jerry'
+document.body.innerHTML = highlight`Hello, ${yourName}. I am ${myName}.` -->
+
+</body>
+<script>
+    // 知识点： 带标签的模板字符串
+    const highlight = (literals, ...values) => {
+        debugger
+
+        let raw = literals.raw
+        
+        var output = "";
+        for (let i = 0; i < values.length; i++) {
+            output += literals[i] + `<span class='red'>${values[i]}</span>`
+        }
+        output += literals[literals.length-1]
+        return output
+    }
+    const yourName = 'ScriptOJ'
+    const myName = 'Jerry'
+    document.body.innerHTML = highlight `Hello, ${yourName}. I am ${myName}.`
+</script>
+
+</html>
