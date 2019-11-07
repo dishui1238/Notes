@@ -3,18 +3,18 @@
 
 // 方法一
 const arrWithoutLoop = n => {
-    return Array.from(Array(n), (item, i) => i)
+  return Array.from(Array(n), (item, i) => i)
 }
 // 方法二
 // Array(3)  [empty × 3]
 // [...Array(n)] [undefined, undefined, undefined]
 const arrWithoutLoop2 = n => {
-    return [...Array(n)].map((item, i) => i)
+  return [...Array(n)].map((item, i) => i)
 }
 
 const arrWithoutLoop3 = n => {
-    let arrStr = Object.keys([...Array(n)]) //["1","2","3"...]
-    return arrStr.map(Number)
+  let arrStr = Object.keys([...Array(n)]) //["1","2","3"...]
+  return arrStr.map(Number)
 }
 
 console.log(arrWithoutLoop(10));

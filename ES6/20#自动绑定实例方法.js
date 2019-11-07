@@ -34,20 +34,20 @@
 
 
 const autoBind = (fn) => new Proxy(fn, {
-    construct(target, args) {
-        return new Proxy(new fn(...args), {
-            get: (target, key) => {
-                return typeof target[key] === 'function' ? target[key].bind(target) : target[key]
-            }
-        })
-    }
+  construct(target, args) {
+    return new Proxy(new fn(...args), {
+      get: (target, key) => {
+        return typeof target[key] === 'function' ? target[key].bind(target) : target[key]
+      }
+    })
+  }
 })
 
 class Person {
-  constructor (name) {
+  constructor(name) {
     this.name = name
   }
-  sayHi () {
+  sayHi() {
     console.log(`I am ${this.name}.`)
   }
 }

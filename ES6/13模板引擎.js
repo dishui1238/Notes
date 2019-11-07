@@ -39,5 +39,5 @@
 // 传入的 data 可以作为模版引擎执行的上下文进行数据的引用
 
 const render = (template, data) => {
-    
+
 }

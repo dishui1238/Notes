@@ -209,7 +209,8 @@ $ git push [remote] --all
 #### 撤销
 ```
 # 恢复暂存区的指定文件到工作区
-$ git checkout [file]
+$ git checkout --file
+命令中的--很重要，没有--，就变成了“切换到另一个分支”的命令
 
 # 恢复某个commit的指定文件到暂存区和工作区
 $ git checkout [commit] [file]
@@ -224,6 +225,7 @@ $ git reset [file]
 $ git reset --hard
 
 # 重置当前分支的指针为指定commit，同时重置暂存区，但工作区不变
+$ git reset --soft HEAD^ (从commit回退到add，但工作区保持不变)
 $ git reset [commit]
 
 # 重置当前分支的HEAD为指定commit，同时重置暂存区和工作区，与指定commit一致
@@ -244,3 +246,13 @@ $ git stash pop
 `git reset --hard`
 `git pull`
 
+### 项目中常用
+```
+# 下载远程仓库的所有变动
+$ git fetch
+# 将develop分支合并到当前分支（冲突问题）
+$ git merge origin develop
+# 将本地分支推送到指定分支
+$  git push origin feature-22293:develop
+
+```

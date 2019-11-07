@@ -4,16 +4,16 @@
 
 // arr.forEach() 返回值为 undefined
 
-const injectSections = (items , sections) => {
-    const res = items.map ( item => [item] )
-    if(sections.length !== 0){
-        sections.forEach(el => {
-            res[el.index].unshift(el.content)
-        });
-        return Array.prototype.concat.apply([],res)
-    }else{
-        return items
-    }
+const injectSections = (items, sections) => {
+  const res = items.map(item => [item])
+  if (sections.length !== 0) {
+    sections.forEach(el => {
+      res[el.index].unshift(el.content)
+    });
+    return Array.prototype.concat.apply([], res)
+  } else {
+    return items
+  }
 }
 
 // injectSections(
@@ -26,6 +26,15 @@ const injectSections = (items , sections) => {
 
 // console.log(injectSections([],[{ content: 'section2', index: 2 }]));
 const result = injectSections(
-    ["item1","item2","item3","item4"],
-    [{content:"section0",index:3},{content:"section1",index:2},{content:"section2",index:1}])
+  ["item1", "item2", "item3", "item4"],
+  [{
+    content: "section0",
+    index: 3
+  }, {
+    content: "section1",
+    index: 2
+  }, {
+    content: "section2",
+    index: 1
+  }])
 console.log(result);

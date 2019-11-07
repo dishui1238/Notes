@@ -4,18 +4,18 @@
 
 
 const Tomy = new Proxy({}, {
-    set() {
-        console.log('Don\'t Touch Me.');
-        return;
-    },
-    deleteProperty() {
-        console.log('Don\'t Touch Me.');
-        return;
-    },
-    defineProperty() {
-        console.log('Don\'t Touch Me.');
-        return;
-    }
+  set() {
+    console.log('Don\'t Touch Me.');
+    return;
+  },
+  deleteProperty() {
+    console.log('Don\'t Touch Me.');
+    return;
+  },
+  defineProperty() {
+    console.log('Don\'t Touch Me.');
+    return;
+  }
 })
 Tomy.name = 'hhh'
 

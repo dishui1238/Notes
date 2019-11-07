@@ -11,10 +11,10 @@
 // }
 
 const type = (obj) => {
-    return Object.prototype.toString.call(obj).slice(8, -1).toLowerCase();
+  return Object.prototype.toString.call(obj).slice(8, -1).toLowerCase();
 }
 console.log(type(new Date));
 console.log(type(true));
-console.log(type(function(){}));
+console.log(type(function () {}));
 console.log(type(Symbol()));
 console.log(type(Math));

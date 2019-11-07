@@ -3,3 +3,4 @@ test
 AJAX
 webpack-base
 React
+*node_modules

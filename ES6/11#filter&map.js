@@ -10,17 +10,17 @@
 // console.log(m) // => Map { Jerry => 12 , Jimmy => 13, Tomy => 14 }
 
 Map.prototype.filterKeys = function (fn) {
-    return new Map([...this].filter(([key, value]) => fn(key)))
+  return new Map([...this].filter(([key, value]) => fn(key)))
 }
 
-Map.prototype.filterValues = function(fn){
-    return new Map([...this].filter(([key, value]) => fn(value)))
+Map.prototype.filterValues = function (fn) {
+  return new Map([...this].filter(([key, value]) => fn(value)))
 }
 
 const m = new Map([
-    ['Jerry', 12],
-    ['Jimmy', 13],
-    ['Tomy', 14]
+  ['Jerry', 12],
+  ['Jimmy', 13],
+  ['Tomy', 14]
 ])
 // this的指向问题
 

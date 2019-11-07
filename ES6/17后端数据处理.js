@@ -22,7 +22,7 @@ const data = {
       note: ''
     }
   ]
-}
+};
 // rows 是数据，metaData 是对数据的说明。现写一个函数 parseData，将上面的对象转化为期望的数组：
 
 // [

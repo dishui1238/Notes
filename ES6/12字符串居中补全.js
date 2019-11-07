@@ -8,9 +8,9 @@
 // centerPad('Hello', 1, 'abc') // => 'Hello'
 
 const centerPad = (str, len, pad) => {
-    let padLen = len - str.length;
-    let result = str.padStart(padLen / 2 + str.length, pad).padEnd(len, pad)
-    return result
+  let padLen = len - str.length;
+  let result = str.padStart(padLen / 2 + str.length, pad).padEnd(len, pad)
+  return result
 }
 const test = centerPad('Hello', 13, 'abc')
 console.log(test);

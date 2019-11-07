@@ -4,21 +4,21 @@
 // 这些方法的时候，除了执行相同的操作，还会把方法名打印出来。
 
 function ObserverableArray(...args) {
-    // console.log(...args);
+  // console.log(...args);
 
-    return new Proxy(new Array(...args), {
-        // get参数：目标对象，访问的属性
-        get(target, propKey) {
-            const res = target[propKey]
-            if (typeof res == 'function') {
-                return function (...args) {
-                    console.log(propKey);
-                    return res.apply(this, args)
-                }
-            }
-            return res
+  return new Proxy(new Array(...args), {
+    // get参数：目标对象，访问的属性
+    get(target, propKey) {
+      const res = target[propKey]
+      if (typeof res == 'function') {
+        return function (...args) {
+          console.log(propKey);
+          return res.apply(this, args)
         }
-    })
+      }
+      return res
+    }
+  })
 }
 
 let arr = ObserverableArray(1, 2, 3)

@@ -1,12 +1,11 @@
-
 const fillEmpty = (arr) => {
-    for (let i = 0; i < arr.length; i++) {
-        if (!(i in arr)) {
-            arr[i] = "Hello";
-        }
+  for (let i = 0; i < arr.length; i++) {
+    if (!(i in arr)) {
+      arr[i] = "Hello";
     }
-    return arr;
- };
+  }
+  return arr;
+};
 
 const a = [, , null, undefined, 'OK', , ]
 

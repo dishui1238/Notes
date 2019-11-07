@@ -5,19 +5,19 @@
 // // 去除数组的重复成员    [...new Set(array)]
 
 const unique = (arr => {
-    const res = new Set(arr)
-    // 测试
-    // console.log(res); //Set { 0, 1, 2, 3, 4 }
-    // console.log(res.size);   //5
-    // console.log(res.add(5));    // Set { 0, 1, 2, 3, 4, 5 }
+  const res = new Set(arr)
+  // 测试
+  // console.log(res); //Set { 0, 1, 2, 3, 4 }
+  // console.log(res.size);   //5
+  // console.log(res.add(5));    // Set { 0, 1, 2, 3, 4, 5 }
 
-    return [...res]
+  return [...res]
 })
 console.log(unique([0, 1, 2, 2, 3, 3, 4]));
 
 
 // 方法二
 const unique2 = (arr => {
-    return Array.from(new Set(arr))
+  return Array.from(new Set(arr))
 })
 console.log(unique2([0, 1, 2, 2, 3, 3, 4]));

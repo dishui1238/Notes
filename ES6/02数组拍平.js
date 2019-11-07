@@ -8,7 +8,7 @@ const flatten = (arr) => {
         Array.isArray(item) ? result = result.concat(flatten(item)) : result.push(item)
         }
     )
-    return result
+    return result;
 }
 // 方法二
 // const flatten2 = (arr) => {
@@ -22,9 +22,9 @@ const flatten3 = (arr) => {
         arrStr.map(item => {
             res.push(Number(item))
         })
-        return res
+        return res;
     }else{
-        return arr
+        return arr;
     }
 }
 // 方法四

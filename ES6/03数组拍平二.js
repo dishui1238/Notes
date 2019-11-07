@@ -9,16 +9,18 @@
 // numbers.next().value // => 5
 
 function* flatten(arr) {
-    for(let item of arr){
-        // Array.isArray(item) ? yield *flatten(item) : yield item
-        if(Array.isArray(item)){
-            yield *flatten(item)
-        }else{
-            yield item
-        }
+  for (let item of arr) {
+    // Array.isArray(item) ? yield *flatten(item) : yield item
+    if (Array.isArray(item)) {
+      yield* flatten(item)
+    } else {
+      yield item
     }
+  }
 }
-const numbers = flatten([1, [[2], 3, 4], 5])
+const numbers = flatten([1, [
+  [2], 3, 4
+], 5])
 console.log(numbers.next().value)
 console.log(numbers.next().value)
 console.log(numbers.next().value)
@@ -27,10 +29,10 @@ console.log(numbers.next().value)
 
 // 例子
 function* demo() {
-    console.log('Hello' + (yield 12455)); 
-    console.log('Hello' + (yield 123)); 
-  }
-  const p = demo()
-console.log(p.next()); 
-console.log(p.next()); 
-console.log(p.next()); 
+  console.log('Hello' + (yield 12455));
+  console.log('Hello' + (yield 123));
+}
+const p = demo()
+console.log(p.next());
+console.log(p.next());
+console.log(p.next());
