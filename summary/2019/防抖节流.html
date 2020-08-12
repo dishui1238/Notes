@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div>
+    未防抖<input type="text" id="none"> <br>
+  </div>
+  <div>
+    防抖<input type="text" id='debounce'> <br>
+  </div>
+  <div>
+    节流<input type="text" id="throttle">
+  </div>
+
+  <script>
+    var inputA = document.getElementById('none');
+    var inputB = document.getElementById('debounce');
+    var inputC = document.getElementById('throttle');
+    // 1. 未防抖节流
+    inputA.addEventListener('keyup', function(e){
+      console.log(e.target.value)
+    })
+
+    // 2. 防抖效果 ① this 指向 ② event 对象 ③ 返回值
+    // func 函数 ，delay 延迟时间， immediate 是否立即执行
+    function debounce(func, delay, immediate){
+      var timeId;
+      var result;
+      return function(){
+        let that = this // that指向window
+        let args = arguments;
+
+        if (timeId !== null) clearTimeout(timeId);
+
+        if(immediate){ // 立即执行
+          //  如果已经执行过，不再执行
+          var callnow = !timeId;
+          timeId = setTimeout(function(){
+            result = func.apply(that, args);
+          }, delay);
+          if (callnow) result = func.apply(that, args)
+
+        } else { // 不立即执行
+          timeId = setTimeout(function(){
+            let result = func.apply(that, args);
+          }, delay);
+        }
+        return result;
+      }
+    }
+    
+    function handle(val){
+      console.log(val);
+    }
+    var debounceEg = debounce(handle, 1000, true)
+
+    inputB.addEventListener('keyup', function(e){
+      debounceEg(e.target.value)
+    })
+
+    // 3. 节流
+
+  </script>
+</body>
+</html>
