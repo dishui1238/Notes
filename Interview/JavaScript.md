@@ -36,18 +36,18 @@ async1 start
 async2
 promise1
 script end
-promise2
 async1 end
+promise2
 setTimeout
 ```
 
 > 执行过程： 首先输出`script start`，`setTimeout`分发到宏任务队列等待执行，调用 async1 函数，并且立即执行，输出`async1 start`，调用 async2 函数，立即执行，输出`async2`， async2 返回一个 Promise，放入微任务队列中等待，await 会让出线程。执行 new Promise，输出`promise1`，resolve 放入微任务队列，输出`script end`。立即执行的代码都已执行完。
 
-> 然后执行微任务队列，第一个就是前面 async1 中放进去的 Promise，执行 Promise 时发现 resolve 函数，划重点：这个 resolve 又会被放入任务队列继续等待，然后再次跳出 async1 函数 继续下一个任务。
+> 然后执行微任务队列，第一个就是前面 async1 中放进去的 Promise，输出`async1 end`。
 
-> 接下来就是 new Promise 中放进去的 resolve 回调，输出`promise2`，再次执行微任务队列，输出`async2`。
+> 接下来就是 new Promise 中放进去的 resolve 回调，输出`promise2`。
 
-> 最后执行宏任务 setTimeout，输出`setTimeout`。
+> 最后轮询执行宏任务 setTimeout，输出`setTimeout`。
 
 **知识点：**
 
