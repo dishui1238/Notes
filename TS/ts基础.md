@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-12-24 15:16:26
- * @LastEditTime: 2020-12-25 18:18:02
+ * @LastEditTime: 2020-12-28 11:22:48
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \0dailyUpdateNotes\Notes\TS\1.ts基础.md
@@ -298,3 +298,44 @@ function isFish(animal: Cat | Fish) {
 - /// <reference /> 三斜线指令
 
 通常我们会把声明语句放到一个单独的文件（xxx.d.ts）中，这就是声明文件
+
+TypeScript 作为 JavaScript 的超集，在开发过程中不可避免要引用其他第三方的 JavaScript 的库。虽然通过直接引用可以调用库的类和方法，但是却无法使用 TypeScript 诸如类型检查等特性功能。为了解决这个问题，需要将这些库里的函数和方法体去掉后只保留导出类型声明，而产生了一个描述 JavaScript 库和模块信息的声明文件。通过引用这个声明文件，就可以借用 TypeScript 的各种特性来使用库文件了。
+
+## 8. 内置对象
+
+JavaScript 中有很多内置对象，它们可以直接在 TypeScript 中当做定义好了的类型。
+
+**[ECMAScript 的内置对象](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects)**
+
+ECMAScript 标准提供的内置对象有：Boolean、Error、Date、RegExp、Math 等;
+
+我们可以在 TypeScript 中将变量定义为这些类型，他们的定义文件，则在 TypeScript 核心库的定义文件中。
+
+```ts
+let b: Boolean = new Boolean(1);
+let e: Error = new Error("Error occurred");
+let d: Date = new Date();
+let r: RegExp = /[a-z]/;
+```
+
+**DOM 和 BOM 的内置对象**
+
+DOM 和 BOM 提供的内置对象有：Document、HTMLElement、Event、NodeList 等。
+TypeScript 中会经常用到这些类型，它们的定义文件同样在 TypeScript 核心库的定义文件中。
+
+```ts
+let body: HTMLElement = document.body;
+let allDiv: NodeList = document.querySelectorAll("div");
+document.addEventListener("click", function (e: MouseEvent) {
+  // Do something
+});
+```
+
+**[TypeScript 核心库的定义文件](https://github.com/Microsoft/TypeScript/tree/master/src/lib)**
+
+TypeScript 核心库的定义文件中定义了所有浏览器环境需要用到的类型，并且是预置在 TypeScript 中的。
+
+**用 TypeScript 写 Node.js**
+
+Node.js 不是内置对象的一部分，如果想用 TypeScript 写 Node.js，则需要引入第三方声明文件：
+`npm install @types/node --save-dev`
