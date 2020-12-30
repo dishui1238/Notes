@@ -1,15 +1,14 @@
-function maxProfit(prices: number[]): number {
-  let minPrice: number = prices[0];
-  let maxProfit: number = 0;
-  for (let i = 0; i < prices.length; i++) {
-    if (prices[i] < minPrice) {
-      minPrice = prices[i];
-    } else if (prices[i] - minPrice > maxProfit) {
-      maxProfit = prices[i] - minPrice;
-    }
-  }
+/*
+ * @Author: your name
+ * @Date: 2020-12-24 15:33:02
+ * @LastEditTime: 2020-12-29 11:52:00
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \Github-Repositories\Notes\TS\demo.ts
+ */
+let tom: [string, number];
+tom = ["Tom", 25];
+tom.push("male");
+// tom.push(true);
 
-  return maxProfit;
-}
-
-console.log(maxProfit([7, 1, 5, 3, 6, 4]));
+console.log(tom);

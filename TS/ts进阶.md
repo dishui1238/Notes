@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-12-28 11:24:08
- * @LastEditTime: 2020-12-28 14:12:14
+ * @LastEditTime: 2020-12-29 14:17:54
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \0dailyUpdateNotes\Notes\TS\ts进阶.md
@@ -47,5 +47,26 @@ handleEvent(document.getElementById("world"), "dblclick"); // 报错，event 不
 ## 3.元组
 
 数组合并了相同类型的对象，而元组（Tuple）合并了不同类型的对象。
-
 元组起源于函数编程语言（如 F#），这些语言中会频繁使用元组。
+`let tom: [string, number] = ['Tom', 25];`
+
+越界的元素:
+当添加越界的元素时，它的类型会被限制为元组中每个类型的联合类型
+
+```ts
+let tom: [string, number];
+tom = ["Tom", 25];
+tom.push("male"); // ["Tom", 25, 'male']
+tom.push(true);
+
+// Argument of type 'true' is not assignable to parameter of type 'string | number'.
+```
+
+## 3.枚举
+
+枚举使用 enum 关键字来定义：`enum Days {Sun, Mon, Tue, Wed, Thu, Fri, Sat};`
+枚举成员会被赋值为从 0 开始递增的数字，同时也会对枚举值到枚举名进行反向映射
+
+## 4.类
+
+
