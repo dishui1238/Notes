@@ -1,18 +1,19 @@
 <!--
  * @Author: your name
  * @Date: 2020-12-28 09:23:25
- * @LastEditTime: 2020-12-29 08:33:21
- * @LastEditors: your name
+ * @LastEditTime: 2020-12-30 15:02:19
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \Github-Repositories\Notes\TODOLIST\README.md
 -->
+
 # 一月份
 
 ### 前端学习
 
 1. [ ] leetCode 每日一题
 2. [ ] 记录优秀 blogs
-3. [ ] [前端面试题](https://segmentfault.com/a/1190000021966814)，做到每天看一题
+3. [ ] [前端面试题](https://segmentfault.com/a/1190000021966814) 或 [壹题汇总](http://www.muyiy.cn/question)，做到每天看一题
 4. [ ] [TS 入门教程](https://ts.xcatliu.com/)过一遍(1 月 3 号前)
 5. [ ] webpack 打包简化原理 与 loader 与 plugin (1 月 3 号前)
 
@@ -25,7 +26,7 @@
 
 1. 每周至少锻炼三次
    - [x] 2020-12-28
-   - [ ] 2020-12-29
+   - [ ] 2020-12-30
    - [ ] 2020-12-31
    - [ ] 2021-01-02
    - [ ] 2021-01-03
