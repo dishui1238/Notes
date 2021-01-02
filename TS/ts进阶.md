@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-12-28 11:24:08
- * @LastEditTime: 2020-12-29 14:17:54
+ * @LastEditTime: 2020-12-31 16:04:34
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \0dailyUpdateNotes\Notes\TS\ts进阶.md
@@ -69,4 +69,39 @@ tom.push(true);
 
 ## 4.类
 
+**public private 和 protected**
 
+- public 修饰的属性或方法是公有的，可以在任何地方被访问到，默认所有的属性和方法都是 public 的
+- private 修饰的属性或方法是私有的，不能在声明它的类的外部访问
+- protected 修饰的属性或方法是受保护的，它和 private 类似，区别是它在子类中也是允许被访问的
+
+```js
+class Animal {
+  static name;
+  static age;
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+}
+let a = new Animal("Jack", 10);
+console.log(a.name); // 'Jack'
+console.log(a.age); // 10
+```
+
+```ts
+class Animal {
+  public name;
+  private age;
+  public constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+}
+
+let a = new Animal("Jack", 22);
+console.log(a.name); // Jack
+console.log(a.age);
+a.name = "Tom";
+console.log(a.name); // Tom
+```

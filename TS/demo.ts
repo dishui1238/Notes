@@ -6,9 +6,11 @@
  * @Description: In User Settings Edit
  * @FilePath: \Github-Repositories\Notes\TS\demo.ts
  */
-let tom: [string, number];
-tom = ["Tom", 25];
-tom.push("male");
-// tom.push(true);
-
-console.log(tom);
+class Animal {
+  public name;
+  private age;
+  public constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+}
