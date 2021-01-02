@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-12-28 09:23:25
- * @LastEditTime: 2020-12-30 15:02:19
+ * @LastEditTime: 2021-01-02 20:16:12
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \Github-Repositories\Notes\TODOLIST\README.md
@@ -26,9 +26,7 @@
 
 1. 每周至少锻炼三次
    - [x] 2020-12-28
-   - [ ] 2020-12-30
-   - [ ] 2020-12-31
-   - [ ] 2021-01-02
+   - [x] 2021-01-02
    - [ ] 2021-01-03
 2. 读书
    - [ ] 《医治受伤的自信》 （一月份读完，脱了很久了）
