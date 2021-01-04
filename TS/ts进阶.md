@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-12-28 11:24:08
- * @LastEditTime: 2020-12-31 16:04:34
+ * @LastEditTime: 2021-01-04 17:18:58
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \0dailyUpdateNotes\Notes\TS\ts进阶.md
@@ -105,3 +105,93 @@ console.log(a.age);
 a.name = "Tom";
 console.log(a.name); // Tom
 ```
+
+## 5. 类与接口
+
+> 实现（implements）是面向对象中的一个重要概念。一般来讲，一个类只能继承自另一个类，有时候不同类之间可以有一些共有的特性，这时候就可以把特性提取成接口（interfaces），用 implements 关键字来实现。
+
+**类实现接口**
+
+```ts
+interface Alarm {
+  alert(): void;
+}
+
+class Door {}
+
+class SecurityDoor extends Door implements Alarm {
+  alert() {
+    console.log("SecurityDoor alert");
+  }
+}
+
+class Car implements Alarm {
+  alert() {
+    console.log("Car alert");
+  }
+}
+```
+
+一个类可以实现多个接口：
+
+```ts
+interface Alarm {
+  alert(): void;
+}
+
+interface Light {
+  lightOn(): void;
+  lightOff(): void;
+}
+
+class Car implements Alarm, Light {
+  alert() {
+    console.log("Car alert");
+  }
+  lightOn() {
+    console.log("Car light on");
+  }
+  lightOff() {
+    console.log("Car light off");
+  }
+}
+```
+
+**接口继承接口**
+
+接口与接口之间可以是继承关系：
+
+```ts
+interface Alarm {
+  alert(): void;
+}
+
+interface LightableAlarm extends Alarm {
+  lightOn(): void;
+  lightOff(): void;
+}
+```
+
+LightableAlarm 继承了 Alarm，除了拥有 alert 方法之外，还拥有两个新方法 lightOn 和 lightOff
+
+**接口继承类**
+
+## 6. 泛型
+
+> 泛型（Generics）是指在定义函数、接口或类的时候，不预先指定具体的类型，而在使用的时候再指定类型的一种特性。
+
+我们预期的是，数组中每一项都应该是输入的 value 的类型。
+
+```ts
+function createArray<T>(length: number, value: T): Array<T> {
+  let result: T[] = [];
+  for (let i = 0; i < length; i++) {
+    result[i] = value;
+  }
+  return result;
+}
+
+createArray<string>(3, "x"); // ['x', 'x', 'x']
+```
+
+上例中，我们在函数名后添加了 <T>，其中 T 用来指代任意输入的类型，在后面的输入 value: T 和输出 Array<T> 中即可使用了。
