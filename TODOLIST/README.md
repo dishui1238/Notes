@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-12-28 09:23:25
- * @LastEditTime: 2021-01-04 17:21:43
+ * @LastEditTime: 2021-01-08 14:24:36
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \Github-Repositories\Notes\TODOLIST\README.md
@@ -17,10 +17,12 @@
 4. [x] [TS 入门教程](https://ts.xcatliu.com/)过一遍(1 月 3 号前)
 5. [ ] webpack 打包简化原理 与 loader 与 plugin (1 月 3 号前)
 
-6. [ ] 彻底搞懂 JS 原型、原型链（第二周 4-10 号）
-7. [ ] 彻底搞懂 JS 作用域 和 闭包
+6. [x] 彻底搞懂 JS 原型、原型链（第二周 4-10 号）
+7. [ ] 彻底搞懂 JS 作用域
+7. [ ] 彻底搞懂 JS 闭包
 8. [ ] 彻底搞懂 JS 执行机制
 9. [ ] 彻底搞懂 JS this
+10. [ ] 手写 Promise
 
 ### life
 
