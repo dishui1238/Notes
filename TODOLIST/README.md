@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-12-28 09:23:25
- * @LastEditTime: 2021-01-13 08:10:27
+ * @LastEditTime: 2021-01-14 15:49:04
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \Github-Repositories\Notes\TODOLIST\README.md
@@ -33,7 +33,6 @@
    - [x] 2021-01-10
    - [x] 2021-01-11
    - [x] 2021-01-12
-   - [ ] 2021-01-13
    - [ ] 2021-01-14
    - [ ] 2021-01-16
    - [ ] 2021-01-17
