@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-12-28 09:23:25
- * @LastEditTime: 2021-01-15 08:31:57
+ * @LastEditTime: 2021-01-19 17:09:36
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \Github-Repositories\Notes\TODOLIST\README.md
@@ -34,8 +34,8 @@
    - [x] 2021-01-11
    - [x] 2021-01-12
    - [x] 2021-01-14
-   - [ ] 2021-01-16
-   - [ ] 2021-01-17
+   - [ ] 2021-01-19
+   - [ ] 2021-01-20
 2. 读书
    - [ ] 《医治受伤的自信》 （一月份读完，拖很久了。。。）
    - [ ] 《自控力》
