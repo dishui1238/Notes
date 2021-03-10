@@ -54,5 +54,7 @@
 
 # 读书
 
-- [ ] 《医治受伤的自信
+- [You don't know js](https://github.com/dishui1238/Notes/tree/master/readBooks)
+- [ ] 《医治受伤的自信》
 - [ ] 《自控力》
+
