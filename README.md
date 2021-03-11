@@ -1,5 +1,5 @@
 <!--
- * 
+ *
  * 　　┏┓　　　┏┓+ +
  * 　┏┛┻━━━┛┻┓ + +
  * 　┃　　　　　　　┃ 　
@@ -21,10 +21,8 @@
  * 　　　┗┓┓┏━┳┓┏┛ + + + +
  * 　　　　┃┫┫　┃┫┫
  * 　　　　┗┻┛　┗┻┛+ + + +
- * 
+ *
  -->
-
-
 
 # 学习
 
@@ -38,11 +36,12 @@
 2. [x] [彻底搞懂 JS 原型、原型链](https://github.com/dishui1238/Notes/blob/master/JS/%E5%8E%9F%E5%9E%8B%E3%80%81%E5%8E%9F%E5%9E%8B%E9%93%BE.md)
 3. [x] [彻底搞懂 JS 作用域](https://github.com/dishui1238/Notes/blob/master/JS/%E4%BD%9C%E7%94%A8%E5%9F%9F.md)
 4. [x] [彻底搞懂 JS 变量对象](https://github.com/dishui1238/Notes/blob/master/JS/03%E5%8F%98%E9%87%8F%E5%AF%B9%E8%B1%A1.md)
-5. [ ] 彻底搞懂 JS this
-6. [ ] 彻底搞懂 JS 闭包
-7. [ ] 彻底搞懂 JS 执行机制
-8. [ ] 手写 Promise
-9. [ ] 抓包调试
+5. [ ] 彻底搞懂 JS 作用域链
+6. [ ] 彻底搞懂 JS this
+7. [ ] 彻底搞懂 JS 闭包
+8. [ ] 彻底搞懂 JS 执行机制
+9. [ ] 手写 Promise
+10. [ ] 抓包调试
 
 ## React 相关
 
@@ -57,4 +56,3 @@
 - [You don't know js](https://github.com/dishui1238/Notes/tree/master/readBooks)
 - [ ] 《医治受伤的自信》
 - [ ] 《自控力》
-
