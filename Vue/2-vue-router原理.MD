@@ -339,18 +339,40 @@ let Vue; // 保存Vue构造函数，插件中要使用，不导入还能用
 class VueRouter {
   constructor(options) {
     this.$options = options;
+    this.matched = [];
+    this.current = window.location.hash.slice(1) || "/";
 
-    // 把current作为响应式数据
     // 将来发生变化，router-view的render函数能够再次执行
-    const initial = window.location.hash.slice(1) || "/";
-    Vue.util.defineReactive(this, "current", initial);
+    Vue.util.defineReactive(this, "matched", []);
+    // 监控 hash 变化 hash变化的时候更新current，从而触发router-view组件的重新渲染
+    window.addEventListener("hashchange", this.onHashChange.bind(this));
+    // 初始执行一次
+    this.match();
+  }
 
-    // hash模式下通过hashchange方法可以监听url中hash的变化
-    // history模式下通过 popstate
-    window.addEventListener("hashchange", () => {
-      console.log(this.current);
-      this.current = window.location.hash.slice(1);
-    });
+  onHashChange() {
+    this.current = window.location.hash.slice(1);
+    console.log("this.current", this.current);
+    this.matched = []; // 保存匹配的路由数组
+    this.match();
+  }
+
+  // 递归遍历routes，获取当前hash匹配的路由
+  match(routes) {
+    routes = routes || this.$options.routes;
+    for (const key in routes) {
+      const route = routes[key];
+      if (route.path === "/" && this.current === "/") {
+        this.matched.push(route);
+        return;
+      }
+      if (route.path !== "/" && this.current.indexOf(route.path) !== -1) {
+        this.matched.push(route);
+        if (route.children) {
+          this.match(route.children);
+        }
+      }
+    }
   }
 }
 
@@ -373,7 +395,7 @@ VueRouter.install = function (_Vue) {
       /**
        * 此钩子在每个组件创建实例时都会调用， 根实例才有该选项
        * options是 new Vue 的参数，我们一般称之为选项或者构造选项
-      */
+       */
       if (this.$options.router) {
         Vue.prototype.$router = this.$options.router;
       }
@@ -414,15 +436,27 @@ export default {
 export default {
   name: "View",
   render(h) {
+    this.$vnode.data.routerView = true;
+
+    // 标记当前 router-view 深度
+    let depth = 0;
+    let parent = this.$parent;
+    while (parent) {
+      const vnodeData = parent.$vnode && parent.$vnode.data;
+      if (vnodeData && vnodeData.routerView) {
+        depth++;
+      }
+      parent = parent.$parent;
+    }
+
+    console.log("depth", depth, this.$router);
+
     // 获取当前路由对应的组件
     let component = null;
-    const route = this.$router.$options.routes.find(
-      (route) => route.path === this.$router.current
-    );
+    const route = this.$router.matched[depth];
     if (route) {
       component = route.component;
     }
-    console.log(this.$router.current, component);
 
     return h(component);
   },

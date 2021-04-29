@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-04-26 20:38:31
- * @LastEditTime: 2021-04-28 10:31:50
+ * @LastEditTime: 2021-04-29 14:14:59
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /Github/Notes/Vue/3-vuex原理.MD
@@ -64,7 +64,6 @@ class Store{
      *         }
      *    }
      * )}
-     * 
      * 
     */
     // 实现 getters
