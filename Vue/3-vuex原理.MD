@@ -1,36 +1,64 @@
 <!--
  * @Author: your name
  * @Date: 2021-04-26 20:38:31
- * @LastEditTime: 2021-04-29 14:14:59
+ * @LastEditTime: 2021-04-29 22:02:27
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /Github/Notes/Vue/3-vuex原理.MD
 -->
 
+## 分析
+
+需要实现功能：
+
+- state 状态、数据
+- mutations 更改状态的函数
+- actions 异步操作
+- store 包含以上概念的容器
+
+## 原理实现
+
 ```js
 let Vue;
 class Store{
-  constructor(options = {}){
     // Vue 实例被创建时，它将 data 对象中的所有的 property 加入到 Vue 的响应式系统中。当这些 property 的值发生改变时，视图将会产生“响应”，即匹配更新为新的值
 
-    // 嵌套两层是为了隐藏数据，不被用户拿到
+    // options 为 new Vuex.Store 时传入的数据 {state: {…}, getters: {…}, mutations: {…}, actions: {…}}
+  constructor(options) {
+    this._mutations = options.mutations;
+    this._actions = options.actions;
+    this._wrappedGetters = options.getters;
+
+    this.commit = this.commit.bind(this);
+    this.dispatch = this.dispatch.bind(this);
+    this.getters = {}; // 仓库上面挂载一个getters, 暴露给用户
+    const computed = {}; // {doubleCounter: doubleCounter(){return state.counter * 2}}
+    // $store.getters.doubleCounter
+    const store = this;
+    Object.keys(this._wrappedGetters).forEach((key) => {
+      const fn = store._wrappedGetters[key];
+
+      // 转化为 computed 可以转化为无参数形式
+      computed[key] = function() {
+        return fn(store.state);
+      };
+      // 为 getters 定义只读属性
+      Object.defineProperty(store.getters, key, {
+        get: () => {
+          return store._vm[key];
+        },
+      });
+    });
+
+    // data响应式处理
+    // this.$store.state.xx
     this._vm = new Vue({
       data: {
-        $$state: options.state;
-      }
-    })
-    this._mutations = options.mutations || {};
-    this._actions = options.actions || {};
-    this._getters = options.getters || {};
-
-    // 绑定commit上下⽂否则action中调⽤commit时可能出问题!!
-    // 同时也把action绑了，因为action可以互调
-    this.commit = function boundCommit(type, payload) {
-                    commit.call(store, type, payload)
-                  };
-    this.action = function boundAction(type, payload) {
-                    action.call(store, type, payload)
-                  };
+        $$state: options.state,
+      },
+      computed,
+    });
+  }
 
     get state(){
       // _vm._data === _vm.$data === _vm.data
@@ -56,7 +84,7 @@ class Store{
     /**
      * 使用 getters
      * $store.getters.doubleCounter
-     * 
+     *
      * export default new Vuex.Store({
      *    getters: {
      *        doubleCounter(state) { // 计算剩余数量
@@ -64,13 +92,8 @@ class Store{
      *         }
      *    }
      * )}
-     * 
+     *
     */
-    // 实现 getters
-    getters(type, payload){
-      const entry = this._getters[type]
-    }
-
     /**
      * actions: {
      *  add: ({commit}){
@@ -88,18 +111,27 @@ class Store{
       entry(this, payload);
     }
   }
-}
+```
 
-function install(_Vue){
+```js
+let Vue;
+function install(_Vue) {
   Vue = _Vue;
+  // 组件创建的过程是 先父后子
   Vue.mixin({
-    beforeCreate(){
-      if(this.$options.store){
+    beforeCreate() {
+      // 含有 this.$options.store 的是根实例
+      console.log("this.$options", this.$options);
+      if (this.$options.store) {
         Vue.prototype.$store = this.$options.store;
       }
-    }
-  })
+    },
+  });
 }
 // new Vuex.Store({})
 export default { Store, install };
 ```
+
+## 总结
+
+Vuex 的 state 状态是响应式，是借助 vue 的 data 是响应式，将 state 存入 vue 实例组件的 data 中；Vuex 的 getters 则是借助 vue 的计算属性 computed 实现数据实时监
