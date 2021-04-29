@@ -353,7 +353,15 @@ class VueRouter {
     });
   }
 }
+
+export default VueRouter;
+```
+
+```js
+import View from "xxx";
+import Link from "xxx";
 // 参数1是Vue.use调用时传入的
+let Vue;
 VueRouter.install = function (_Vue) {
   Vue = _Vue;
 
@@ -362,52 +370,61 @@ VueRouter.install = function (_Vue) {
   // 全局混入目的：延迟下面逻辑到router创建完毕并且附加到选项上时才执行
   Vue.mixin({
     beforeCreate() {
-      // 次钩子在每个组件创建实例时都会调用
-      // 根实例才有该选项
+      /**
+       * 此钩子在每个组件创建实例时都会调用， 根实例才有该选项
+       * options是 new Vue 的参数，我们一般称之为选项或者构造选项
+      */
       if (this.$options.router) {
         Vue.prototype.$router = this.$options.router;
       }
     },
   });
-
-  // 2.注册实现两个组件router-view,router-link
-  Vue.component("router-link", {
-    props: {
-      to: {
-        type: String,
-        required: true,
-      },
-    },
-    render(h) {
-      // <a href="to">xxx</a>
-      // return <a href={'#'+this.to}>{this.$slots.default}</a>
-      return h(
-        "a",
-        {
-          attrs: {
-            href: "#" + this.to,
-          },
-        },
-        this.$slots.default
-      );
-    },
-  });
-  Vue.component("router-view", {
-    render(h) {
-      // 获取当前路由对应的组件
-      let component = null;
-      const route = this.$router.$options.routes.find(
-        (route) => route.path === this.$router.current
-      );
-      if (route) {
-        component = route.component;
-      }
-      console.log(this.$router.current, component);
-
-      return h(component);
-    },
-  });
+  Vue.component("RouterView", View);
+  Vue.component("RouterLink", Link);
 };
+```
 
-export default VueRouter;
+```js
+// 2.注册实现两个组件router-view,router-link
+export default {
+  name: "Link",
+  props: {
+    to: {
+      type: String,
+      required: true,
+    },
+  },
+  render(h) {
+    // <a href="to">xxx</a>
+    // return <a href={'#'+this.to}>{this.$slots.default}</a>
+    return h(
+      "a",
+      {
+        attrs: {
+          href: "#" + this.to,
+        },
+      },
+      this.$slots.default
+    );
+  },
+};
+```
+
+```js
+export default {
+  name: "View",
+  render(h) {
+    // 获取当前路由对应的组件
+    let component = null;
+    const route = this.$router.$options.routes.find(
+      (route) => route.path === this.$router.current
+    );
+    if (route) {
+      component = route.component;
+    }
+    console.log(this.$router.current, component);
+
+    return h(component);
+  },
+};
 ```
