@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-04-26 20:38:31
- * @LastEditTime: 2021-04-29 22:02:27
+ * @LastEditTime: 2021-04-30 10:18:00
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /Github/Notes/Vue/3-vuex原理.MD
@@ -135,3 +135,5 @@ export default { Store, install };
 ## 总结
 
 Vuex 的 state 状态是响应式，是借助 vue 的 data 是响应式，将 state 存入 vue 实例组件的 data 中；Vuex 的 getters 则是借助 vue 的计算属性 computed 实现数据实时监
+
+**思维导图：**https://www.processon.com/view/link/5e146d6be4b0da16bb15aa2a

@@ -1,0 +1,76 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-04-30 11:47:35
+ * @LastEditTime: 2021-04-30 13:52:33
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /Github/vue-demos/vue-study/kvue/demos.html
+-->
+<div id="div"></div>
+
+<script>
+  // 定义响应式
+  function defineReactive(obj, key, val) {
+    observe(val);
+    Object.defineProperty(obj, key, {
+      get() {
+        console.log("get", key);
+        return val;
+      },
+      set(newVal) {
+        if (newVal !== val) {
+          console.log("get", key);
+          val = newVal;
+          update(); // 更新视图
+        }
+      },
+    });
+  }
+
+  function observe(obj) {
+    if (typeof val !== 'object' || obj === null) {
+      return;
+    }
+    // 遍历 obj 所有的 key 做响应式处理
+    Object.keys(obj).forEach(key => {
+      defineReactive(obj, key, obj[key])
+    })
+  }
+
+  // 3. 处理第三个问题
+  function set(obj, key, val) {
+    defineReactive(obj, key, val);
+  }
+
+  // 更新视图函数
+  function update() {
+    div.innerText = obj.foo;
+  }
+
+  const obj = {
+    bar: {
+      a: 1
+    }
+  };
+  defineReactive(obj, "foo", "foo");
+
+
+  //  1.测试 视图更新
+  obj.foo = new Date().toLocaleTimeString();
+  setInterval(() => {
+    obj.foo = new Date().toLocaleTimeString();
+  }, 1000);
+
+  // 2. 测试 嵌套对象的响应式
+  obj.bar.a = 'barrrrrrr';
+  console.log(obj.bar.a); // barrrrrrr
+
+  let obj2 = {
+    a: 1
+  };
+  // obj2.baz = { b: 10 }; // 不能使用这种直接赋值方式
+  set(obj2, 'baz', {
+    b: 10
+  });
+  console.log(obj2.baz.b); // 10
+</script>
