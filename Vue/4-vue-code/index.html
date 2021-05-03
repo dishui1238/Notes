@@ -1,0 +1,29 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-05-03 10:10:05
+ * @LastEditTime: 2021-05-03 14:44:43
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /Github/Notes/Vue/4-vue-code/index.html
+-->
+
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<div id="app">
+  <p>{{counter}}</p>
+  <!-- <p>{{counter}}</p> -->
+  <p v-text="counter"></p>
+  <p v-html="desc"></p>
+</div>
+<script src="vue.js"></script>
+<script>
+  const app = new Vue({
+    el: "#app",
+    data: {
+      counter: 1,
+      desc: '<span style="color:red">vue 原理</span>'
+    },
+  });
+  setInterval(() => {
+    app.counter++;
+  }, 1000);
+</script>
