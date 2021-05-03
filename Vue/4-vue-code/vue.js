@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-05-03 10:10:11
- * @LastEditTime: 2021-05-03 14:46:38
+ * @LastEditTime: 2021-05-03 16:47:53
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /Github/Notes/Vue/4-vue-code/vue.js
@@ -67,12 +67,30 @@ class Vue {
   }
 }
 
+// 数组响应式
+// 1. 替换数组原型中的 7 个方法
+const originProto = Array.prototype;
+// 备份一份，修改备份
+const arrayProto = Object.create(originProto);
+["push", "pop", "shift", "unshift", "splice", "reverse", "sort"].forEach(
+  (method) => {
+    arrayProto[method] = function () {
+      // 原始操作
+      originProto[method].apply(this, arguments);
+      // todo: 覆盖操作：通知更新
+      // const ob = this.__ob__
+      // ob.dep.notify()
+    };
+  }
+);
 class Observer {
   constructor(options) {
     this.options = options;
 
     if (Array.isArray(options)) {
-      // todo
+      // 覆盖原型，替换数组的 7 个变更操作
+      options.__proto__ = arrayProto;
+      this.walk(options);
     } else {
       this.walk(options);
     }
@@ -128,6 +146,10 @@ class Compile {
             const dir = attrName.substring(2);
             this[dir] && this[dir](node, exp);
           }
+          if (attrName.startsWith("@")) {
+            const dir = attrName.substring(1); // click exp="onClick"
+            this.eventHandler(node, exp, dir);
+          }
         });
       } else if (this.isInterpolation(node)) {
         // 插值表达式
@@ -147,11 +169,11 @@ class Compile {
     // exp 为 data 中的数据
     // 1. 初始化
     fn && fn(node, this.$vm[exp]);
-    
+
     // 2. 更新
-    new Watcher(this.$vm, exp, function(val) {
-      fn && fn(node, val)
-    })
+    new Watcher(this.$vm, exp, function (val) {
+      fn && fn(node, val);
+    });
   }
 
   // 定义指令 v-text
@@ -170,6 +192,18 @@ class Compile {
     node.innerHTML = val;
   }
 
+  model(node, exp) {
+    // 1. 赋值和更新
+    this.update(node, exp, "model");
+    // 2. 事件监听
+    node.addEventListener("input", (e) => {
+      this.$vm[exp] = e.target.value;
+    });
+  }
+  modelUpdater = (node, val) => {
+    node.value = val;
+  };
+
   // 是否插值表达式
   isInterpolation(node) {
     return node.nodeType === 3 && /\{\{(.*)\}\}/.test(node.textContent);
@@ -178,25 +212,38 @@ class Compile {
   compileText(node) {
     this.update(node, RegExp.$1, "text");
   }
+
+  /**
+   * @description: 事件处理
+   * @param {*} node 节点
+   * @param {*} exp 事件名称 onClick
+   * @param {*} dir 指令 click
+   * @return {*}
+   */
+  eventHandler(node, exp, dir) {
+    const fn = this.$vm.$options.methods && this.$vm.$options.methods[exp];
+    // ! 绑定 this.$vm
+    node.addEventListener(dir, fn.bind(this.$vm));
+  }
 }
 
 // 监听器： 负责依赖更新
-class Watcher{
-  constructor(vm, key, updateFn){
+class Watcher {
+  constructor(vm, key, updateFn) {
     this.vm = vm;
     this.key = key;
     this.updateFn = updateFn;
 
-    // 触发依赖收集 触发 get 
-    Dep.target = this
+    // 触发依赖收集 触发 get
+    Dep.target = this;
     // 触发 get , 触发依赖收集
     this.vm[this.key];
-    Dep.target = null
+    Dep.target = null;
   }
 
   // 被 Dep 调用
-  update(){
+  update() {
     // 执行实际更新操作  this.vm 上下文  this.vm[this.key] 参数
-    this.updateFn.call(this.vm, this.vm[this.key])
+    this.updateFn.call(this.vm, this.vm[this.key]);
   }
 }

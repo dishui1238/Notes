@@ -100,3 +100,7 @@ let obj2 = { a: 1 };
 set(obj2, "baz", { b: 10 });
 console.log(obj2.baz.b); //
 ```
+
+## 依赖收集
+
+详细代码见， `4-vue-code` 里面添加了详细的注解
