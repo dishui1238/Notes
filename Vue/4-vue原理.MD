@@ -1,4 +1,4 @@
-## 1.Vue 设计思想
+# 1.Vue 设计思想
 
 <img src="./imgs/vue-MVVM.jpg">
 
@@ -104,3 +104,31 @@ console.log(obj2.baz.b); //
 ## 依赖收集
 
 详细代码见， `4-vue-code` 里面添加了详细的注解
+
+# 2. vue 源码梳理
+
+https://www.processon.com/view/link/5da6c108e4b002a6448895c3
+
+# 3. 异步更新
+
+observe -> notify()(遍历关联的 watcher 的 update 方法) =>wather-> queueWatcher -> nextTick -> timerFunc -> flushCallbacks
+
+- queueWatcher: 单个 watcher 只入队一次，nextTick 异步方式将 flushScherduler 放入队列
+
+- nextTick:
+
+- timerFunc: 异步执行 callback，Vue 在内部对异步队列尝试使用原生的 Promise.then 、 MutationObserver 或 setImmediate ，如果执行环境都不支持，则会采用 setTimeout 代替
+
+- flushCallbacks 将 callBack 中函数全部回调一遍
+
+- run watcher 真正执行更新的函数
+
+**callback 和 flushSchedulerQueue 函数**
+
+# 4. 虚拟 DOM
+
+lifeCycle -> updateComponent -> \_update -> **patch** -> patchVnode -> updateChildren
+
+- \_update 初始化和更新时传参不一样真实 dom / 虚拟 dom
+- patchVnode 比较两个虚拟 vnode
+- updateChildren 比较两组孩子节点
