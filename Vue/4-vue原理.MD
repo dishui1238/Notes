@@ -234,3 +234,25 @@ function sameVnode(a, b) {
 ```
 
 key 的主要作用是为了高效的更新虚拟 DOM，其原理是 vue 在 patch 过程中通过 key 可以精准判断两个节点是否是同一个，从而避免频繁更新不同元素，使得整个 patch 过程更加高效，减少 DOM 操作量，提高性能。
+
+## 其它
+
+Object.defineProperty 循环依赖， 必须的在里面新添一个属性不然会造成循环引用
+
+```js
+const obj = {
+  a: 1,
+  b: 2,
+};
+
+let objCOPY = {};
+Object.keys(obj).forEach((key) => {
+  Object.defineProperty(objCOPY, key, {
+    get() {
+      console.log("get", key);
+      return obj[key];
+    },
+  });
+});
+objCOPY.a;
+```

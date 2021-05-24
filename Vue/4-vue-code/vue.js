@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-05-03 10:10:11
- * @LastEditTime: 2021-05-03 16:47:53
+ * @LastEditTime: 2021-05-21 15:48:16
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /Github/Notes/Vue/4-vue-code/vue.js
@@ -166,7 +166,6 @@ class Compile {
   // 更新集合
   update(node, exp, dir) {
     const fn = this[dir + "Updater"];
-    // exp 为 data 中的数据
     // 1. 初始化
     fn && fn(node, this.$vm[exp]);
 
