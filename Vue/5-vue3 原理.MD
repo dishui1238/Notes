@@ -1,11 +1,86 @@
 <!--
  * @Author: your name
  * @Date: 2021-05-20 06:30:11
- * @LastEditTime: 2021-05-21 09:07:22
+ * @LastEditTime: 2021-05-24 10:58:48
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /Github/Notes/Vue/5-vue3 原理.MD
 -->
+
+## Vue3 新特性
+
+https://v3.cn.vuejs.org/guide/migration/introduction.html#%E6%A6%82%E8%A7%88
+
+### 1. 组合式 API
+
+1. setup
+
+- setup 组件选项在创建组件之前执行
+- setup 选项应该是一个接受 props 和 context 的函数
+
+  - 因为 props 是响应式的，你不能使用 ES6 解构，因为它会消除 prop 的响应性
+
+  ```js
+  import { toRefs } from "vue";
+  setup(props) {
+    const { title } = toRefs(props)
+
+    console.log(title.value)
+  }
+  ```
+
+- setup 返回的所有内容都将暴露给组件的其余部分 (计算属性、方法、生命周期钩子等等) 以及组件的模板
+
+2. 响应式变量
+
+通过一个新的 ref 函数使任何响应式变量在任何地方起作用
+
+```js
+import { ref } from "vue";
+
+const counter = ref(0);
+```
+
+3. 生命周期钩子注册在 setup 内部
+   onMounted
+
+4. 独立的 computed 属性
+
+```js
+// src/components/UserRepositories.vue `setup` function
+import { fetchUserRepositories } from '@/api/repositories'
+import { ref, onMounted, watch, toRefs } from 'vue'
+
+// 在我们组件中
+setup (props) {
+  // 使用 `toRefs` 创建对prop的 `user` property 的响应式引用
+  const { user } = toRefs(props)
+
+  const repositories = ref([])
+  const getUserRepositories = async () => {
+    // 更新 `prop.user` 到 `user.value` 访问引用值
+    repositories.value = await fetchUserRepositories(user.value)
+  }
+
+  onMounted(getUserRepositories)
+
+  // 在用户 prop 的响应式引用上设置一个侦听器
+  watch(user, getUserRepositories)
+
+  const searchQuery = ref('')
+  const repositoriesMatchingSearchQuery = computed(() => {
+    return repositories.value.filter(
+      repository => repository.name.includes(searchQuery.value)
+    )
+  })
+
+  return {
+    searchQuery,
+    repositories,
+    getUserRepositories
+  }
+}
+```
 
 ## Vue3
 

@@ -1,3 +1,7 @@
+思维导图：
+初始化和数据响应式: https://www.processon.com/view/link/5da6c108e4b002a6448895c3#map
+异步更新和虚拟 dom: https://www.processon.com/view/link/5e830387e4b0a2d87023890a#map
+
 # 1.Vue 设计思想
 
 <img src="./imgs/vue-MVVM.jpg">
@@ -235,7 +239,11 @@ function sameVnode(a, b) {
 
 key 的主要作用是为了高效的更新虚拟 DOM，其原理是 vue 在 patch 过程中通过 key 可以精准判断两个节点是否是同一个，从而避免频繁更新不同元素，使得整个 patch 过程更加高效，减少 DOM 操作量，提高性能。
 
-## 其它
+## snabbdom
+
+一个强大的虚拟 dom 库
+
+# 5.其它
 
 Object.defineProperty 循环依赖， 必须的在里面新添一个属性不然会造成循环引用
 
