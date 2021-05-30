@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-05-20 06:30:11
- * @LastEditTime: 2021-05-28 13:39:54
+ * @LastEditTime: 2021-05-30 12:18:29
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /Github/Notes/Vue/5-vue3 原理.MD
@@ -154,8 +154,9 @@ reactive 响应式处理，传一个对象
 
 1. vue2.0 不能对对象的 delete 操作符进行属性拦截。
 2. vue2.0 不能对对象的 in 操作符进行属性拦截 `a in object`
-3. 数组需要拦截原型方法实现响应式
+3. 数组需要拦截原型方法实现响应式， 无法监听数组基于下标的修改
 4. 对象上新增的属性没有响应式 `obj.a = 1`, 需要使用 `this.$set`，因为 `Object.defineProperty(obj, key, fn)` 必须预先知道要拦截的 key 是什么，这也就是为什么 Vue2 里对于对象上的新增属性无能为力
+5. 不支持 Map、Set、WeakMap 和 WeakSet
 
 ### 1. Proxy
 
@@ -249,6 +250,10 @@ Proxy(target, {
 源码对应位置：packages/reactivity/src/effect.ts
 
 ```js
+/**
+ * 返回 proxy 对象
+ * 如果目标对象是引用类型，需要递归处理；shallowReactive 不递归处理，只建立一层的响应式
+ */
 function reactive(obj){
   if(typeof obj !== 'object'){
     // 报错处理， reactive 接受对象
@@ -258,20 +263,21 @@ function reactive(obj){
     // 拦截取值操作
     get(target, key, receiver){
       console.log('get', key);
-      // TODO:触发依赖收集
+      // 触发依赖收集
+      const res = Reflect.get(target, key, receiver)
       track(target, key)
 
       // 如果目标数据是对象，需要递归
       if(typeof obj === 'object'){
-        reactive(target)
+        return eactive(res)
       }
 
-      return Reflect.get(target, key, receiver)
+      return res
     },
     // 拦截赋值操作
     set(target, key, value, receiver){
       console.log('set', key)
-      // TODO: 触发更新
+      //  触发更新
       trigger(target, key)
       return Reflect.set(target, key, value,receiver)
     },
@@ -359,12 +365,26 @@ function createReactiveEffect(fn) {
 }
 ```
 
+与 vue2.0 不同的是,即便是深度响应式我们也只能在获取上一级 get 之后才能触发下一级的深度响应式。 比如
+
+```js
+setup(){
+ const state = reactive({ a:{ b:{} } })
+ return {
+     state
+ }
+}
+```
+
+在初始化的时候，只有 a 的一层级建立了响应式，b 并没有建立响应式，而当我们用 state.a 的时候，才会真正的将 b 也做响应式处理，也就是说我们访问了上一级属性后，下一代属性才会真正意义上建立响应式
+
 ### 5. 总结
 
 vue3.0 建立响应式的方法有两种：
 
-第一个就是运用 composition-api 中的 reactive 直接构建响应式，composition-api 的出现我们可以在.vue 文件中，直接用 setup()函数来处理之前的大部分逻辑，也就是说我们没有必要在 export default{ } 中在声明生命周期 ， data(){} 函数，watch{} , computed{} 等 ，取而代之的是我们在 setup 函数中，用 vue3.0 reactive watch 生命周期 api 来到达同样的效果，这样就像 react-hooks 一样提升代码的复用率，逻辑性更强。
+- 第一个就是运用 composition-api 中的 reactive 直接构建响应式，composition-api 的出现我们可以在.vue 文件中，直接用 setup()函数来处理之前的大部分逻辑，也就是说我们没有必要在 export default{ } 中在声明生命周期 ， data(){} 函数，watch{} , computed{} 等 ，取而代之的是我们在 setup 函数中，用 vue3.0 reactive watch 生命周期 api 来到达同样的效果，这样就像 react-hooks 一样提升代码的复用率，逻辑性更强。
 
-第二个就是用传统的 data(){ return{} } 形式 ,vue3.0 没有放弃对 vue2.0 写法的支持，而是对 vue2.0 的写法是完全兼容的，提供了 applyOptions 来处理 options 形式的 vue 组件。但是 options 里面的 data , watch , computed 等处理逻辑，还是用了 composition-api 中的 API 对应处理。
+- 第二个就是用传统的 data(){ return{} } 形式 ,vue3.0 没有放弃对 vue2.0 写法的支持，而是对 vue2.0 的写法是完全兼容的，提供了 **applyOptions** 来处理 options 形式的 vue 组件。但是 options 里面的 data , watch , computed 等处理逻辑，还是用了 composition-api 中的 API 对应处理。
 
 ## 编译原理
+

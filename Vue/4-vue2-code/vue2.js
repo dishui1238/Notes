@@ -251,24 +251,6 @@ class Observer {
   }
 }
 
-// 监听器：负责依赖更新
-class Watcher1 {
-  constructor(vm, key, updateFn) {
-    this.vm = vm;
-    this.key = key;
-    this.updateFn = updateFn;
-
-    // 触发依赖收集 触发 get
-    Dep.target = this;
-    // 触发 get , 触发依赖收集
-    this.vm[this.key];
-    Dep.target = null;
-  }
-
-  update() {
-    this.updateFn.call(this.vm, this.vm[this.key]);
-  }
-}
 class Watcher {
   constructor(vm, expOrFn) {
     this.vm = vm;
@@ -286,112 +268,6 @@ class Watcher {
 
   update() {
     this.get();
-  }
-}
-
-class Compiler {
-  constructor(el, vm) {
-    this.$vm = vm;
-    this.$el = document.querySelector(el);
-
-    if (this.$el) {
-      this.compile(this.$el);
-    }
-  }
-
-  compile(el) {
-    const childNodes = el.childNodes || [];
-
-    childNodes.forEach((node) => {
-      // nodeType = 1 元素节点, 2 属性节点, 3 元素或属性中的文本内容
-      const attrs = node.attributes;
-      // 元素节点， 处理 指令 和 事件
-      if (node.nodeType === 1 && attrs && attrs.length > 0) {
-        Array.from(attrs).forEach((attr) => {
-          const attrName = attr.name;
-          const exp = attr.value; // 表达式
-          if (attrName.startsWith("v-")) {
-            const dir = attrName.substring(2);
-            // 执行对应指令的方法
-            this[dir] && this[dir](node, exp);
-          }
-          if (attrName.startsWith("@")) {
-            const dir = attrName.substring(1); // click exp="onClick"
-            this.eventHandler(node, exp, dir);
-          }
-        });
-      } else if (this.isInterpolation(node)) {
-        // 插值表达式
-        this.compileText(node);
-      }
-
-      if (node.childNodes && node.childNodes.length > 0) {
-        this.compile(node.childNodes);
-      }
-    });
-  }
-
-  // 是否插值表达式
-  isInterpolation(node) {
-    return node.nodeType === 3 && /\{\{(.*)\}\}/.test(node.textContent);
-  }
-
-  // update 集合
-  update(node, exp, dir) {
-    const fn = this[dir + "Updater"];
-    // 初始化
-    fn && fn(node, this.$vm[exp]);
-
-    // 2. 更新
-    new Watcher1(this.$vm, exp, function (val) {
-      fn && fn(node, val);
-    });
-  }
-
-  // 定义指令 v-text
-  text(node, exp) {
-    this.update(node, exp, "text");
-  }
-  textUpdater(node, val) {
-    node.textContent = val;
-  }
-
-  // 定义指令 v-html
-  html(node, exp) {
-    this.update(node, exp, "html");
-  }
-  htmlUpdater(node, val) {
-    node.innerHTML = val;
-  }
-
-  // 定义指令 v-model
-  model(node, exp) {
-    // 1. 赋值和更新
-    this.update(node, exp, "model");
-    // 2. 事件监听
-    node.addEventListener("input", (e) => {
-      this.$vm[exp] = e.target.value;
-    });
-  }
-  modelUpdater = (node, val) => {
-    node.value = val;
-  };
-
-  compileText(node) {
-    this.update(node, RegExp.$1, "text");
-  }
-
-  /**
-   * @description: 事件处理
-   * @param {*} node 节点
-   * @param {*} exp 事件名称 onClick
-   * @param {*} dir 指令 click
-   * @return {*}
-   */
-  eventHandler(node, exp, dir) {
-    const fn = this.$vm.$options.methods && this.$vm.$options.methods[exp];
-    // ! 绑定 this.$vm
-    node.addEventListener(dir, fn.bind(this.$vm));
   }
 }
 
